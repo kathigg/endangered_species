@@ -35,12 +35,13 @@ TNode* BST::insertHelper(TNode* node, const string sp, const string st, const st
                 //recursive insert into left subtree
                 insertHelper(node->left, sp, st, inf);
             }
-        if (sp > node->animal->name) {
+        }
+        else if (sp > node->animal->name) {
             // insert into right subtree
             if (node->right == NULL){
                 TNode *newNode = new TNode(sp, st, inf);
                 node->right = newNode;
-                newNode->parent = root;
+                newNode->parent = node;
             }
             else {
                 //recursive insert into right subtree
@@ -50,24 +51,51 @@ TNode* BST::insertHelper(TNode* node, const string sp, const string st, const st
         else {
             // species already exists in the tree
         }
-        }
-    }  
+    } 
+    return node; 
 }
-
 
 TNode* BST::find(const string name) { 
-    
+    TNode* current = root;
+    while (current != NULL) {
+        if (name == current->animal->name) {
+            return current;
+        }
+        else {
+            if (name < current->animal->name) {
+                current = current->left;
+            }
+            else {
+                current = current->right; 
+            } 
+            } 
+        }  
+    return NULL;
 }
 
-void BST::PrintTreeIO() {
+void BST::printTreeIO() {
+    //ok, so printing a tree in order means that you go all the way down to the 
+    //bottom of the left subtree, and move from there. 
+    /* 1. visit left node 
+    2. print root
+    3. visit right node */
+    printIOHelper(root);
+}
+
+void BST::printIOHelper(TNode* node){
+    if (node == NULL){
+        return;
+    }
+    printIOHelper(node->left);
+    cout << node->animal->name << endl;
+    printIOHelper(node->right);
+}
+
+void BST::printTreePre() {
 
 }
 
-void BST::PrintTreePre() {
-
-}
-
-void BST::PrintTreePost() {
+void BST::printTreePost() {
 
 }
 

@@ -35,8 +35,9 @@ class BST {
         BST(const bool Xtra); // constructor
         ~BST(); // destructor
         void insert(const string sp, const string st, const string inf);
-        TNode* insertHelper(TNode* node, const string sp, const string st, const string inf); 
+        class TNode* insertHelper(TNode* node, const string sp, const string st, const string inf); 
         class TNode* find(const string name); 
+        void BST::printIOHelper(TNode* node);
         void printTreeIO();
         void printTreePre();
         void printTreePost();
