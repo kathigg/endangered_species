@@ -36,7 +36,6 @@ class BST {
         ~BST(); // destructor
         void insert(const string sp, const string st, const string inf);
         class TNode* find(const string name); 
-        void insert(const string sp, const string st, const string inf);
         void printTreeIO();
         void printTreePre();
         void printTreePost();
