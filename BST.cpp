@@ -33,7 +33,7 @@ TNode* BST::insertHelper(TNode* node, const string sp, const string st, const st
             }
             else {
                 //recursive insert into left subtree
-                BST leftSubtree(false);
+                insertHelper(node->left, sp, st, inf);
             }
         if (sp > node->animal->name) {
             // insert into right subtree
@@ -44,7 +44,7 @@ TNode* BST::insertHelper(TNode* node, const string sp, const string st, const st
             }
             else {
                 //recursive insert into right subtree
-                BST rightSubtree(false);
+                insertHelper(node->right, sp, st, inf);
             }
         }
         else {
@@ -54,9 +54,6 @@ TNode* BST::insertHelper(TNode* node, const string sp, const string st, const st
     }  
 }
 
-BST rightSubtree(bool Xtra){
-
-}
 
 TNode* BST::find(const string name) { 
     
