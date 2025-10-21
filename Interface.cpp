@@ -9,7 +9,7 @@ using namespace std;
 
 
 Interface::Interface(const string name, const bool Xtra) {
-	fn = name;
+	fn = name; 
 	tree = new BST(Xtra);
 	readFile();
 }
