@@ -18,7 +18,4 @@ public:
 
 };
 
-
-
-
 #endif /* INTERFACE_HPP_ */
