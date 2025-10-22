@@ -92,10 +92,29 @@ void BST::printIOHelper(TNode* node){
 }
 
 void BST::printTreePre() {
+    printPreHelper(root);
+}
 
+void BST::printPreHelper(TNode* node){
+    if (node == NULL){
+        return;
+    }
+    cout << node->animal->name << endl;
+    printPreHelper(node->left);
+    printPreHelper(node->right);
 }
 
 void BST::printTreePost() {
+    printPostHelper(root);
+}
+
+void BST::printPostHelper(TNode* node){
+    if (node == NULL){
+        return;
+    }
+    printPreHelper(node->left);
+    printPreHelper(node->right);
+    cout << node->animal->name << endl;
 
 }
 

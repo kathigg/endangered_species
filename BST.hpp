@@ -38,6 +38,8 @@ class BST {
         class TNode* insertHelper(TNode* node, const string sp, const string st, const string inf); 
         class TNode* find(const string name); 
         void BST::printIOHelper(TNode* node);
+        void BST::printPreHelper(TNode* node);
+        void BST::printPostHelper(TNode* node);
         void printTreeIO();
         void printTreePre();
         void printTreePost();
