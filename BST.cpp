@@ -119,10 +119,58 @@ void BST::printPostHelper(TNode* node){
 }
 
 void BST::updateStatus(const string name, const string status){
+    TNode* node = find(name);
+    if (node != NULL){
+        node->animal->status = status;
+    }
 
 }
 
+TNode* BST::getSuccessor(TNode* curr) {
+    curr = curr->right;
+    while (curr != nullptr && curr->left != nullptr) {
+        curr = curr->left;
+    }
+    return curr;
+}
+
+TNode* BST::delNode(TNode* root) {
+        // node with 0 or 1 child 
+        if (root->left == nullptr) {
+            TNode* temp = root->right; 
+            delete root; 
+            return temp;
+        }
+        if (root->right == nullptr) {
+            TNode* temp = root->left;
+            delete root;
+            return temp;
+        }
+
+        // Node with two children 
+        TNode* succ = getSuccessor(root);
+        root->animal->name = succ->animal->name;
+        root->right = delNode(root->right); 
+        return root; 
+}
+
+
 TNode* BST::remove(const string name) {
+    TNode* to_delete = find(name);
+    TNode* deleted = delNode(to_delete);
+    /* 
+    1. start at the root
+    2. do a find for the data you want to remove (go left if less, right if greater, etc)
+    if you find the data in the tree, remove it!
+    if you don't find the data, you'll reach a null node 
+
+    there are 3 possible cases for removing a node:
+    1. the node to be removed has 0 children (is a leaf)
+    2. the node to be removed has 1 child
+    3. the node to be removed has 2 children
+    */
+
+
 
 }
 

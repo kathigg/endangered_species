@@ -46,5 +46,8 @@ class BST {
 
         void updateStatus(const string name, const string status);
         class TNode* remove(const string name);
+        TNode* delNode(TNode* root); 
+        TNode* getSuccessor(TNode* curr);
+
 };
 #endif /* BST_HPP_ */
