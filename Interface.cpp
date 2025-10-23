@@ -1,4 +1,6 @@
 #include "Interface.hpp"
+#include "BST.hpp"
+#include "TNode.hpp"
 
 #include <iostream>
 #include <stdlib.h>
@@ -149,7 +151,7 @@ void Interface::Menu() {
 	}
 }
 
-void Interface::strip(const string s, string arr[]) {
+void Interface::strip(string s, string arr[]) {
 	const char* Splitter = "|";
 	const char* EndChar = "|";
 	size_t start = 0;

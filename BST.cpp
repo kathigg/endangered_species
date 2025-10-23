@@ -14,9 +14,22 @@ BST::~BST() {
     // left subtree and the right subtree, followed by a visit to the root node. 
     // As Professor Yarrington always says, you have to kill the children before 
     // you kill the parents! 
+    deletionHelper(root); 
 }
-void BST::insert(const string sp, const string st, const string inf) {
+
+void BST::deletionHelper(TNode* node){
+    if (node == NULL){
+        return;
+    }
+    // let's do some post-order traversal! (how we do deletion with a BST)
+    deletionHelper(node->left);
+    deletionHelper(node->right);
+    delete node;
+
+}
+bool BST::insert(const string sp, const string st, const string inf) {
     root = insertHelper(root, sp, st, inf);
+    return true;
 }
 TNode* BST::insertHelper(TNode* node, const string sp, const string st, const string inf) {
     if (node == NULL){
@@ -112,8 +125,8 @@ void BST::printPostHelper(TNode* node){
     if (node == NULL){
         return;
     }
-    printPreHelper(node->left);
-    printPreHelper(node->right);
+    printPostHelper(node->left);
+    printPostHelper(node->right);
     cout << node->animal->name << endl;
 
 }
