@@ -2,6 +2,47 @@
 #include "TNode.hpp"
 using namespace std;   
 
+int BST::getHeight(TNode* n) {
+    return n ? n->height : 0;
+}
+
+void BST::updateHeight(TNode* node){
+    if (!node) return;
+    int leftHeight = getHeight(node->left);
+    int rightHeight = getHeight(node->right);
+    node->height = 1 + std::max(leftHeight, rightHeight);
+}
+
+void BST::updateUpwards(TNode* n) {
+    while (n) {
+        updateHeight(n);
+        n = n->parent;
+    }
+}
+
+// Leftmost in a subtree (successor helper)
+TNode* BST::minNode(TNode* n) {
+    if (!n) return nullptr;
+    while (n->left) n = n->left;
+    return n;
+}
+
+// Delete the leftmost node from a subtree and return the new subtree root.
+// Maintains parent pointers.
+TNode* BST::deleteMin(TNode* n) {
+    if (!n) return nullptr;
+    if (!n->left) {
+        TNode* r = n->right;
+        if (r) r->parent = n->parent;
+        delete n;
+        return r;
+    }
+    n->left = deleteMin(n->left);
+    if (n->left) n->left->parent = n;
+    updateHeight(n);
+    return n;
+}
+
 /* constructor! */
 BST::BST(const bool Xtra) {
     root = NULL; 
@@ -33,41 +74,23 @@ bool BST::insert(const string sp, const string st, const string inf) {
     root = insertHelper(root, sp, st, inf);
     return true;
 }
+
 TNode* BST::insertHelper(TNode* node, const string sp, const string st, const string inf) {
-    if (node == NULL){
-        TNode* nnode = new TNode(sp, st, inf);
-        return nnode;
+    if (!node) return new TNode(sp, st, inf);
+
+    if (sp < node->animal->name) {
+        node->left = insertHelper(node->left, sp, st, inf);
+        node->left->parent = node;
+    } else if (sp > node->animal->name) {
+        node->right = insertHelper(node->right, sp, st, inf);
+        node->right->parent = node;
+    } else {
+        // duplicate: no-op (or update info if desired)
+        return node;
     }
-    else {
-        if (sp < node->animal->name) {
-            //insert into left subtree
-            if (node->left == NULL){
-                TNode *newNode = new TNode(sp, st, inf);
-                node->left = newNode;
-                newNode->parent = node;
-            }
-            else {
-                //recursive insert into left subtree
-                insertHelper(node->left, sp, st, inf);
-            }
-        }
-        else if (sp > node->animal->name) {
-            // insert into right subtree
-            if (node->right == NULL){
-                TNode *newNode = new TNode(sp, st, inf);
-                node->right = newNode;
-                newNode->parent = node;
-            }
-            else {
-                //recursive insert into right subtree
-                insertHelper(node->right, sp, st, inf);
-            }
-        }
-        else {
-            // species already exists in the tree
-        }
-    } 
-    return node; 
+
+    updateHeight(node);
+    return node;
 }
 
 TNode* BST::find(const string name) { 
@@ -151,52 +174,62 @@ TNode* BST::getSuccessor(TNode* curr) {
 }
 
 TNode* BST::delNode(TNode* root) {
-        // node with 0 or 1 child 
-        if (root->left == nullptr) {
-            TNode* temp = root->right; 
-            if (temp != nullptr) temp->parent = root->parent;
-            delete root; 
-            return temp;
-        }
-        if (root->right == nullptr) {
-            TNode* temp = root->left;
-            if (temp != nullptr) temp->parent = root->parent;
-            delete root;
-            return temp;
-        }
+    if (!root) return nullptr;
 
-        // Node with two children 
-        TNode* succ = getSuccessor(root);
-        if (succ == nullptr) return root; 
-        *(root->animal) = *(succ->animal);
-        root->right = delNode(root->right); 
-        return root; 
+    // 0 or 1 child — return the replacement and fix parent
+    if (!root->left) {
+        TNode* temp = root->right;
+        if (temp) temp->parent = root->parent;
+        delete root;
+        return temp;
+    }
+    if (!root->right) {
+        TNode* temp = root->left;
+        if (temp) temp->parent = root->parent;
+        delete root;
+        return temp;
+    }
+
+    // 2 children:
+    // 1) find successor (min of right subtree)
+    TNode* succ = minNode(root->right);         // never null here
+    // 2) copy full payload (not just name)
+    *(root->animal) = *(succ->animal);
+    // 3) delete the successor node specifically
+    root->right = deleteMin(root->right);       // removes that exact node
+    if (root->right) root->right->parent = root;
+
+    updateHeight(root);
+    return root;
 }
 
-
 TNode* BST::remove(const string name) {
-    TNode* to_delete = find(name);
-    if (to_delete == nullptr) return nullptr;
-    if (to_delete == root){
-        root = delNode(root);
+    TNode* target = find(name);
+    if (!target) return nullptr;
+
+    TNode* parent = target->parent;
+
+    if (target == root) {
+        root = delNode(root);               // delNode returns new subtree root
+        if (root) root->parent = nullptr;
+        // After root replacement, update heights upward from new root
+        updateUpwards(root);
         return root;
     }
-    TNode* deleted = delNode(to_delete);
-    return deleted;
-    /* 
-    1. start at the root
-    2. do a find for the data you want to remove (go left if less, right if greater, etc)
-    if you find the data in the tree, remove it!
-    if you don't find the data, you'll reach a null node 
 
-    there are 3 possible cases for removing a node:
-    1. the node to be removed has 0 children (is a leaf)
-    2. the node to be removed has 1 child
-    3. the node to be removed has 2 children
-    */
+    // Decide which side to replace on parent
+    TNode* replacement = delNode(target);   // returns new subtree head at that spot
+    if (parent->left == target) {
+        parent->left = replacement;
+    } else {
+        parent->right = replacement;
+    }
+    if (replacement) replacement->parent = parent;
 
+    // Recompute heights up to the root
+    updateUpwards(parent);
 
-
+    return parent;
 }
 
 

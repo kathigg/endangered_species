@@ -34,6 +34,7 @@ class BST {
     */
     BST(const bool Xtra);
     ~BST();
+    int getHeight(TNode* n);
     bool insert(const string sp, const string st, const string inf);
     TNode* insertHelper(TNode* node, const string sp, const string st, const string inf); 
     TNode* find(const string name);
@@ -46,10 +47,16 @@ class BST {
     TNode* delNode(TNode* root); 
     TNode* getSuccessor(TNode* curr);
     
+    void updateHeight(TNode* node);
+
     void printIOHelper(TNode* node);
     void printPreHelper(TNode* node);
     void printPostHelper(TNode* node);
     void deletionHelper(TNode* node);
+
+    TNode* deleteMin(TNode* n);
+    TNode* minNode(TNode* n);
+    void updateUpwards(TNode* n);
 
 };
 #endif /* BST_HPP_ */
