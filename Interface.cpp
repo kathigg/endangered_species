@@ -152,7 +152,7 @@ void Interface::Menu() {
 }
 
 void Interface::strip(string s, string arr[]) {
-	const char* Splitter = "|";
+	//const char* Splitter = "|";
 	const char* EndChar = "|";
 	size_t start = 0;
 	int len;

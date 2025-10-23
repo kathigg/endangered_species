@@ -7,13 +7,13 @@ BST.hpp
 
 #include <iostream>
 #include <stdlib.h>
-#include "Interface.hpp"
+#include "TNode.hpp"
 
 using std::string; 
 
 class BST {
     friend class Interface; 
-    class TNode* root; 
+    TNode* root; 
     bool extraInfo;
     public:
     /* need at minimum the constructor, find, insert, the 3 print methods, and delete methods */
@@ -32,23 +32,24 @@ class BST {
     for remove, write one genral remove method and 2 helper methods. the general remove methods determines the node to be removed and 
     if the node has 0 children, one child, or 2 children. 
     */
-        BST(const bool Xtra); // constructor
-        ~BST(); // destructor
-        void BST::deletionHelper(TNode* node);
-        bool insert(const string sp, const string st, const string inf);
-        class TNode* insertHelper(TNode* node, const string sp, const string st, const string inf); 
-        class TNode* find(const string name); 
-        void BST::printIOHelper(TNode* node);
-        void BST::printPreHelper(TNode* node);
-        void BST::printPostHelper(TNode* node);
-        void printTreeIO();
-        void printTreePre();
-        void printTreePost();
+    BST(const bool Xtra);
+    ~BST();
+    bool insert(const string sp, const string st, const string inf);
+    TNode* insertHelper(TNode* node, const string sp, const string st, const string inf); 
+    TNode* find(const string name);
+    void printTreeIO();
+    void printTreePre();
+    void printTreePost();
 
-        void updateStatus(const string name, const string status);
-        class TNode* remove(const string name);
-        TNode* delNode(TNode* root); 
-        TNode* getSuccessor(TNode* curr);
+    void updateStatus(const string name, const string status);
+    TNode* remove(const string name);
+    TNode* delNode(TNode* root); 
+    TNode* getSuccessor(TNode* curr);
+    
+    void printIOHelper(TNode* node);
+    void printPreHelper(TNode* node);
+    void printPostHelper(TNode* node);
+    void deletionHelper(TNode* node);
 
 };
 #endif /* BST_HPP_ */

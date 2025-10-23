@@ -1,5 +1,6 @@
 #include "BST.hpp"
 #include "TNode.hpp"
+using namespace std;   
 
 /* constructor! */
 BST::BST(const bool Xtra) {
@@ -15,11 +16,12 @@ BST::~BST() {
     // As Professor Yarrington always says, you have to kill the children before 
     // you kill the parents! 
     deletionHelper(root); 
+    root = nullptr;
 }
 
 void BST::deletionHelper(TNode* node){
     if (node == NULL){
-        return;
+        return; 
     }
     // let's do some post-order traversal! (how we do deletion with a BST)
     deletionHelper(node->left);
@@ -140,6 +142,7 @@ void BST::updateStatus(const string name, const string status){
 }
 
 TNode* BST::getSuccessor(TNode* curr) {
+    if (curr == nullptr || curr->right == nullptr) return nullptr;
     curr = curr->right;
     while (curr != nullptr && curr->left != nullptr) {
         curr = curr->left;
@@ -151,18 +154,21 @@ TNode* BST::delNode(TNode* root) {
         // node with 0 or 1 child 
         if (root->left == nullptr) {
             TNode* temp = root->right; 
+            if (temp != nullptr) temp->parent = root->parent;
             delete root; 
             return temp;
         }
         if (root->right == nullptr) {
             TNode* temp = root->left;
+            if (temp != nullptr) temp->parent = root->parent;
             delete root;
             return temp;
         }
 
         // Node with two children 
         TNode* succ = getSuccessor(root);
-        root->animal->name = succ->animal->name;
+        if (succ == nullptr) return root; 
+        *(root->animal) = *(succ->animal);
         root->right = delNode(root->right); 
         return root; 
 }
@@ -170,7 +176,13 @@ TNode* BST::delNode(TNode* root) {
 
 TNode* BST::remove(const string name) {
     TNode* to_delete = find(name);
+    if (to_delete == nullptr) return nullptr;
+    if (to_delete == root){
+        root = delNode(root);
+        return root;
+    }
     TNode* deleted = delNode(to_delete);
+    return deleted;
     /* 
     1. start at the root
     2. do a find for the data you want to remove (go left if less, right if greater, etc)

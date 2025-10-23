@@ -3,8 +3,10 @@
 
 #include <iostream>
 #include <stdlib.h>
-#include "BST.hpp"
+
 using namespace std;
+
+class BST;
 
 class Interface {
 	string fn;

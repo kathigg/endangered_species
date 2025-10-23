@@ -3,7 +3,6 @@ Created on: October 19th, 2025
 Authors: Kathleen Higgins and Aastha Desai
 */
 
-#include "BST.hpp"
 #include "Interface.hpp"
 #include <iostream>
 using std::cout;
