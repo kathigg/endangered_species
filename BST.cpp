@@ -1,3 +1,5 @@
+/* Made by kathleen higgins and aastha desai */ 
+
 #include "BST.hpp"
 #include "TNode.hpp"
 using namespace std;   

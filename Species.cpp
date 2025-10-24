@@ -1,3 +1,5 @@
+/* Made by kathleen higgins and aastha desai */
+
 #include "Species.hpp"
 
 #include <iostream>

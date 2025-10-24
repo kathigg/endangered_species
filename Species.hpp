@@ -1,3 +1,5 @@
+/* Made by kathleen higgins and aastha desai */
+
 #ifndef SPECIES_HPP_
 #define SPECIES_HPP_
 
