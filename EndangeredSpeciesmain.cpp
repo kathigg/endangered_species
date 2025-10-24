@@ -60,7 +60,7 @@ int main() {
 	and when you're satisfied everything runs, you can play around with the
 	larger endangered Species file.
 	********************************************************************/
-	Interface interface("EndangeredSpeciesSubset.txt", false);
+	Interface interface("EndangeredSpecies.txt", false);
 	interface.Menu();
 	return 0;
 }
