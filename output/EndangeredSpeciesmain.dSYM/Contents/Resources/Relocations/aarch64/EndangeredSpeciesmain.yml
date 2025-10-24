@@ -1,5 +1,5 @@
 ---
 triple:          'arm64-apple-darwin'
-binary-path:     '/Users/kathleenhiggins/endangered_species/output/EndangeredSpeciesmain'
+binary-path:     'output/EndangeredSpeciesmain'
 relocations:     []
 ...
