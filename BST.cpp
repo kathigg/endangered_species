@@ -127,6 +127,7 @@ void BST::printTreeIO() {
     printIOHelper(root);
 }
 
+// made a helper function so I can find recursively 
 void BST::printIOHelper(TNode* node){
     if (node == NULL){
         return;
@@ -136,10 +137,12 @@ void BST::printIOHelper(TNode* node){
     printIOHelper(node->right);
 }
 
+// pre-order print, calls another function (printPreHelper) so it can be recursive
 void BST::printTreePre() {
     printPreHelper(root);
 }
 
+// recursive helper for pre-order print
 void BST::printPreHelper(TNode* node){
     if (node == NULL){
         return;
@@ -149,10 +152,12 @@ void BST::printPreHelper(TNode* node){
     printPreHelper(node->right);
 }
 
+// post-order print, calls another function (printPostHelper) so it can be recursive
 void BST::printTreePost() {
     printPostHelper(root);
 }
 
+// recursive helper for post-order print
 void BST::printPostHelper(TNode* node){
     if (node == NULL){
         return;
@@ -162,7 +167,7 @@ void BST::printPostHelper(TNode* node){
     cout << node->animal->name << endl;
 
 }
-
+// updates the status of a species given its name
 void BST::updateStatus(const string name, const string status){
     TNode* node = find(name);
     if (node != NULL){
@@ -170,7 +175,7 @@ void BST::updateStatus(const string name, const string status){
     }
 
 }
-
+// finds the successor of a given node, used in deletion of nodes with 2 children
 TNode* BST::getSuccessor(TNode* curr) {
     if (curr == nullptr || curr->right == nullptr) return nullptr;
     curr = curr->right;
@@ -180,6 +185,7 @@ TNode* BST::getSuccessor(TNode* curr) {
     return curr;
 }
 
+// deletes a node and returns the new subtree root
 TNode* BST::delNode(TNode* root) {
     if (!root) return nullptr;
 
@@ -210,6 +216,7 @@ TNode* BST::delNode(TNode* root) {
     return root;
 }
 
+// removes a node by species name, returns the parent of the removed node
 TNode* BST::remove(const string name) {
     TNode* target = find(name);
     if (!target) return nullptr;
