@@ -4,17 +4,18 @@
 #include "TNode.hpp"
 using namespace std;   
 
+//helper to find height
 int BST::getHeight(TNode* n) {
     return n ? n->height : 0;
 }
-
+//actually updates the height of the node
 void BST::updateHeight(TNode* node){
     if (!node) return;
     int leftHeight = getHeight(node->left);
     int rightHeight = getHeight(node->right);
     node->height = 1 + std::max(leftHeight, rightHeight);
 }
-
+//helper function to update heights upwards from a given node
 void BST::updateUpwards(TNode* n) {
     while (n) {
         updateHeight(n);
@@ -62,6 +63,7 @@ BST::~BST() {
     root = nullptr;
 }
 
+// helper for destructor
 void BST::deletionHelper(TNode* node){
     if (node == NULL){
         return; 
@@ -72,11 +74,14 @@ void BST::deletionHelper(TNode* node){
     delete node;
 
 }
+
+// insert method, returns a bool true indiciating success (calls Insert Helper)
 bool BST::insert(const string sp, const string st, const string inf) {
     root = insertHelper(root, sp, st, inf);
     return true;
 }
 
+//helps with insertion! takes in a node, (it's a recursive function) and the species info
 TNode* BST::insertHelper(TNode* node, const string sp, const string st, const string inf) {
     if (!node) return new TNode(sp, st, inf);
 
@@ -94,7 +99,7 @@ TNode* BST::insertHelper(TNode* node, const string sp, const string st, const st
     updateHeight(node);
     return node;
 }
-
+// finds a node by species name
 TNode* BST::find(const string name) { 
     TNode* current = root;
     while (current != NULL) {

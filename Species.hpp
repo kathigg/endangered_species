@@ -10,7 +10,7 @@ using std::string;
 
 class Species {
 	friend class TNode;
-	friend class BST;  // you'll need to change this
+	friend class BST; 
 	friend class Interface;
 	string name;  // name of the species
 	string status;   // the level of threat - T1, T2, or T3
