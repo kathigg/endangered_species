@@ -1,3 +1,4 @@
+// made by Aastha Desai and Kathleen Higgins
 #ifndef SPECIES_HPP_
 #define SPECIES_HPP_
 

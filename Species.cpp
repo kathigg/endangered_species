@@ -1,3 +1,4 @@
+// made by Aastha Desai and Kathleen Higgins
 #include "Species.hpp"
 
 #include <iostream>
